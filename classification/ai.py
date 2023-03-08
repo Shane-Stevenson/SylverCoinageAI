@@ -14,10 +14,14 @@ import torchvision
 from torchvision import transforms, datasets
 
 # opening and reading file
-file = open("data/positions_small.csv")
+file = open("./out.csv")
 csvreader = csv.reader(file)
 train = list(csvreader)
 writer = SummaryWriter()
+
+
+# for x in range(len(train)):
+#     train[x].pop(0)
 
 #change to float
 train = [[float(s) for s in row] for row in train]
@@ -31,6 +35,7 @@ for x in range(len(train)):
 #convert to tensors
 tensor_train = torch.Tensor(train)
 tensor_test = torch.Tensor(test)
+print(tensor_test)
 
 #separate data set into training and testing
 x_train, x_test, y_train, y_test = train_test_split(tensor_train, tensor_test, test_size=.25, shuffle= False, random_state= 18)
@@ -44,14 +49,14 @@ batchSize = 1
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
-        self.fc1 = nn.Linear(100, 32)
-        self.fc2 = nn.Linear(32, 64)
+        self.fc1 = nn.Linear(100, 256)
+        self.fc2 = nn.Linear(256, 128)
         """self.fc3 = nn.Linear(64, 128)
         self.fc4 = nn.Linear(128, 256)
         self.fc5 = nn.Linear(256, 128)
         self.fc6 = nn.Linear(128, 64)"""
-        self.fc7 = nn.Linear(64, 32)
-        self.fc8 = nn.Linear(32, 16)
+        self.fc7 = nn.Linear(128, 64)
+        self.fc8 = nn.Linear(64, 16)
         self.fc9 = nn.Linear(16, 2)
 
     def forward(self, x):

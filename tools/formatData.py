@@ -34,6 +34,7 @@ def formatD(endgame_dictionary : str, out_location : str):
     print("finished")
                 
 def getHalfWin(csv_data : str, out_location: str):
+    count = 0
     with open(csv_data, 'r') as csvfile:
         datareader = csv.reader(csvfile)
         with open(out_location, 'w') as out:
@@ -41,3 +42,7 @@ def getHalfWin(csv_data : str, out_location: str):
             for row in datareader:
                 if row[100] == '0':
                     write.writerow(row)
+                    count+=1
+                if row[100] == '1' and count >= 1:
+                    write.writerow(row)
+                    count -= 1

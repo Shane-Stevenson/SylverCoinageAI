@@ -2,11 +2,12 @@
 
 import json
 import time
+import csv
 
-def checkWinRate(endgame_dictionary : str):
+def checkWinRatejson(endgame_dictionary_json : str):
 
     print("beginning load")
-    with open(endgame_dictionary,'r') as f:
+    with open(endgame_dictionary_json,'r') as f:
         d = json.load(f)
     print("loaded")
 
@@ -28,4 +29,16 @@ def checkWinRate(endgame_dictionary : str):
             win+= 1
         total += 1
     
+    print(win/total)
+
+def checkWinRateCsv(endgame_dictionary_csv : str):
+    win = 0
+    total = 0
+    with open(endgame_dictionary_csv, 'r') as csvfile:
+        datareader = csv.reader(csvfile)
+        for row in datareader:
+            if row[100] == '1':
+                win+=1
+            total += 1
+        
     print(win/total)
