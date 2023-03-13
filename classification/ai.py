@@ -16,8 +16,8 @@ from torchvision import transforms, datasets
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
-        self.fc1 = nn.Linear(100, 256)
-        self.fc2 = nn.Linear(256, 128)
+        self.fc1 = nn.Linear(100, 128)
+        self.fc2 = nn.Linear(128, 128)
         """self.fc3 = nn.Linear(64, 128)
         self.fc4 = nn.Linear(128, 256)
         self.fc5 = nn.Linear(256, 128)
@@ -41,6 +41,14 @@ class Net(nn.Module):
 
 
 def testAndRun(data : str):
+    """
+    This function accepts an endgame dictionary in csv format from formatJsonToCsv to train and test an AI.
+
+    Parameters:
+    -----------
+    data : str
+        location of the binary csv dictionary generated from formatJsonToCsv
+    """
     # opening and reading file
     file = open(data)
     csvreader = csv.reader(file)
@@ -73,13 +81,12 @@ def testAndRun(data : str):
     net = Net()
 
     optimizer = optim.Adam(net.parameters(), lr = 3e-4)
-    EPOCHS = 10
+    EPOCHS = 3
 
     step = 0
 
     for epoch in range(EPOCHS): 
         random = torch.randperm(x_train.shape[0])
-    #while True:
         for j in range(x_train.shape[0]):
             i = random[j]
             if y_train[i] == 0:
@@ -87,13 +94,12 @@ def testAndRun(data : str):
             else:
                 y = torch.tensor([0.,1.])
             output = net(x_train[i])
-            loss = F.binary_cross_entropy(output, y) #binary classifier!
+            loss = F.binary_cross_entropy(output, y) #binary classifier
             writer.add_scalar("loss/train", loss, step)
             step += 1
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-            #print(y)
         print(loss)
 
     correct = 0
@@ -110,7 +116,7 @@ def testAndRun(data : str):
                 y = torch.tensor([0.,1.])
 
             output = net(x_test[i])
-            loss = F.binary_cross_entropy(output, y) #binary classifier!
+            loss = F.binary_cross_entropy(output, y) #binary classifier
             writer.add_scalar("loss/test", loss, step)
             step += 1
 
