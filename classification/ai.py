@@ -70,7 +70,7 @@ def testAndRun(data : str):
     print(tensor_test)
 
     #separate data set into training and testing
-    x_train, x_test, y_train, y_test = train_test_split(tensor_train, tensor_test, test_size=.25, shuffle= False, random_state= 18)
+    x_train, x_test, y_train, y_test = train_test_split(tensor_train, tensor_test, test_size=.25, shuffle= True, random_state= 30)
     x_train = x_train.type(torch.FloatTensor)
     x_test = x_test.type(torch.FloatTensor)
     y_train = y_train.type(torch.FloatTensor)
@@ -85,6 +85,7 @@ def testAndRun(data : str):
 
     step = 0
 
+    #train
     for epoch in range(EPOCHS): 
         random = torch.randperm(x_train.shape[0])
         for j in range(x_train.shape[0]):
@@ -94,7 +95,7 @@ def testAndRun(data : str):
             else:
                 y = torch.tensor([0.,1.])
             output = net(x_train[i])
-            loss = F.binary_cross_entropy(output, y) #binary classifier
+            loss = F.binary_cross_entropy(output, y) 
             writer.add_scalar("loss/train", loss, step)
             step += 1
             optimizer.zero_grad()
@@ -106,6 +107,7 @@ def testAndRun(data : str):
     total = 0
     step = 0
 
+    #test
     random = torch.randperm(x_test.shape[0])
     with torch.no_grad():
         for j in range(x_test.shape[0]):
@@ -116,7 +118,7 @@ def testAndRun(data : str):
                 y = torch.tensor([0.,1.])
 
             output = net(x_test[i])
-            loss = F.binary_cross_entropy(output, y) #binary classifier
+            loss = F.binary_cross_entropy(output, y)
             writer.add_scalar("loss/test", loss, step)
             step += 1
 

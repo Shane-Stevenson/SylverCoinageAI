@@ -3,10 +3,9 @@ from tools import checkWinRate
 from classification import ai
 import csv
 
-#formatData.formatJsonToCsv('unformattedData/EndgameDictionary.json', 'data/positions_30.csv')
 
-# formatData.getHalfWin('data/positions_30.csv', 'data/positions_30_half.csv')
+#formatData.csvToSeparateWinLoss('data/positions_29.csv', 'w.csv', 'l.csv')
 
-# checkWinRate.checkWinRateCsv('data/positions_30_half.csv')
+#formatData.createTrainingData('w.csv', 'l.csv', '29training.csv', 80000)
 
-ai.testAndRun('data/fake.csv')
+ai.testAndRun('29training.csv')
