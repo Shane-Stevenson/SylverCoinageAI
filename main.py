@@ -8,4 +8,4 @@ import csv
 
 #formatData.createTrainingData('w.csv', 'l.csv', '29training.csv', 80000)
 
-ai.testAndRun('29training.csv')
+ai.testAndRun('data/29training.csv')
