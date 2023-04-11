@@ -80,7 +80,7 @@ def testAndRun(data : str):
 
     net = Net()
 
-    optimizer = optim.Adam(net.parameters(), lr = 3e-4)
+    optimizer = optim.AdamW(net.parameters(), lr = .0003)
     EPOCHS = 3
 
     step = 0
